@@ -30,5 +30,8 @@ export const trainData = {
         {cost: 16250, coolDown: 30, railSims: 53, requirements: {wallet: 6, 'Simeo Plus B': 3}},
         {cost: 19500, coolDown: 29, railSims: 68, requirements: {wallet: 7, 'Flying Sim': 7}},
         {cost: 22750, coolDown: 28, railSims: 79, requirements: {wallet: 8, 'Llama Line': 4}},
+    ],
+    'Sim Rail Grade 00': [
+        {cost: 22750, coolDown: 75, railSims: 232, requirements: {wallet: 8, 'LM Grade 23': 3}}
     ]
 }

@@ -145,16 +145,22 @@ function App() {
       const currentLevel = trainLevels[train] || 0
       if (trainData[train][currentLevel]) {
         let hardRequirements = [{train: train, level: currentLevel + 1}]
+        // if we already have the best so far as a requirement, we shouldn't evaluate, because we will prefer "last"
+        // to best when picking from multiple requirements
+        let haveBest = false
         for (let j = 0; j < hardRequirements.length; j += 1) {
+          haveBest = haveBest || (hardRequirements[j].train === bestTrain && hardRequirements[j].level === bestLevel)
           hardRequirements = hardRequirements.concat(allRequirements(hardRequirements[j], trainLevels))
         }
-        const changes = calculateChanges(hardRequirements, trainLevels, wallet, simsPerDay)
-        const change = changes.initial
-        if (bestNet === undefined || changes.net < bestNet) {
-          bestNet = changes.net
-          bestTrain = change.train
-          bestLevel = change.level
-          bestEarns = getEarnings(change.train, change.level)
+        if (haveBest === false) {
+          const changes = calculateChanges(hardRequirements, trainLevels, wallet, simsPerDay)
+          const change = changes.initial
+          if (bestNet === undefined || changes.net < bestNet) {
+            bestNet = changes.net
+            bestTrain = change.train
+            bestLevel = change.level
+            bestEarns = getEarnings(change.train, change.level)
+          }
         }
       }
     }
